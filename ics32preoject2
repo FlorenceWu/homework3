@@ -1,0 +1,47 @@
+# homework3
+
+#Connect Four: console
+#Xuan Wu 24331470
+#Angela Zhao 49589444
+
+import commonfunction
+import connectfour
+
+GameState=connectfour.GameState
+
+def transMove(gamestate: GameState,userinput:str):
+    col = eval(userinput[1]) - 1
+    
+    if userinput[0].upper() == 'P':
+        return connectfour.pop(gamestate,col)
+    elif userinput[0].upper() == 'D':
+        return connectfour.drop(gamestate, col)
+    else:
+        print("Invalid input")
+        return commonfunction.userInputValid()
+
+    
+def user_interface():
+    count = 1
+    current = connectfour.new_game()
+    commonfunction.printBoard(current.board)
+
+    while True:
+        commonfunction.turn(current.turn)
+        try:
+            move = commonfunction.userInputValid()
+            current = transMove(current,move)
+
+        except:
+            print('Invalid move')
+
+        else:
+            count = count+1
+            commonfunction.printBoard(current.board)
+
+            if count>=7 and commonfunction.win(current) == False:
+                break
+
+
+if __name__ == '__main__':
+    user_interface()
